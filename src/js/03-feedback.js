@@ -8,23 +8,22 @@ if (localFeedback) {
   feedbackForm.message.value = message;
 }
 function dataSave(evt) {
-  const { email, message } = evt.currentTarget;
   localStorage.setItem(
     'feedback-form-state',
     JSON.stringify({
-      email: email.value,
-      message: message.value,
+      email: feedbackForm.email.value,
+      message: feedbackForm.message.value,
     })
   );
 }
-feedbackForm.addEventListener(
-  'input',
-  throttle(dataSave, 500)
-  //   throttle(dataSave, 500, { trailing: false })
-);
+feedbackForm.addEventListener('input', throttle(dataSave, 500));
 
 function handleSubmit(event) {
-  console.log(event.currentTarget);
+  event.preventDefault();
+  console.log({
+    email: feedbackForm.email.value,
+    message: feedbackForm.message.value,
+  });
   localStorage.removeItem('feedback-form-state');
   feedbackForm.reset();
 }
